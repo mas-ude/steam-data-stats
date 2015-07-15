@@ -45,7 +45,18 @@ ggplot(d, aes(x=appid, y=owners)) + geom_point() + scale_y_log10() + xlim(0,4000
 ggplot(d, aes(x=appid, y=average_forever)) + geom_point() + scale_y_log10() + xlim(0,400000)
 ggplot(d, aes(x=appid, y=average_2weeks)) + geom_point() + scale_y_log10() + xlim(0,400000)
 
-ggplot(df.priced, aes(x=price, y=average_2weeks)) + geom_point()
-ggplot(df.priced, aes(x=price, y=average_forever)) + geom_point()
 
-ggplot(df.priced, aes(x=price, y=players_forever)) + geom_point()
+
+### price data
+
+ggplot(df.priced, aes(x=price, y=average_2weeks)) + geom_point() + xlim(0,10000)
+ggplot(df.priced, aes(x=price, y=average_forever)) + geom_point() + xlim(0,10000)
+
+ggplot(df.priced, aes(x=price, y=players_forever)) + geom_point() + xlim(0,10000)
+
+
+
+prices <- as.data.frame(table(df.priced$price))
+names(prices) <- c("price", "frequency")
+ggplot(prices, aes(x=price, y=frequency)) + geom_point()
+ggplot(df.priced, aes(x=price)) + stat_ecdf() + scale_x_log10()
