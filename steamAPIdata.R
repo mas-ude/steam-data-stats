@@ -36,3 +36,4 @@ for (i in 1:nrow(d)) {
 }
 
 write.table(df.priced, file="steamdata.csv")
+write.csv(df.priced, file="steamdata.csv", row.names=FALSE)

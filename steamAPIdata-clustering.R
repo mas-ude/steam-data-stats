@@ -1,4 +1,4 @@
-df.priced <- read.table(file="steamdata.csv")
+df.priced <- read.csv(file="steamdata.csv")
 
 ### clustering
 library(devtools)

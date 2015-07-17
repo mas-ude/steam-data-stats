@@ -1,4 +1,4 @@
-df.priced <- read.table(file="steamdata.csv")
+df.priced <- read.csv(file="steamdata.csv")
 
 
 ggplot(d, aes(x=owners)) + stat_ecdf() + scale_x_log10()
@@ -62,9 +62,9 @@ for (i in 1:nrow(df.priced)) {
 }
 df.priced2$price_category <- as.factor(df.priced2$price_category)
 df.priced2$price_category <- ordered(df.priced2$price_category, levels=c("free", "<5", "5 to 10", "10 to 20", "20 to 40", "above 40"))
-ggplot(df.priced2, aes(x=price_category, y=players_forever)) + geom_violin() + scale_y_log10()
+ggplot(df.priced2, aes(x=price_category, y=players_forever)) + geom_violin(adjust=.5) + scale_y_log10()
 ggsave("dampfviolinen-players.pdf")
-ggplot(df.priced2, aes(x=price_category, y=average_forever)) + geom_violin() + scale_y_log10()
+ggplot(df.priced2, aes(x=price_category, y=average_forever)) + geom_violin(adjust=.5, scale="count") + scale_y_log10()
 ggsave("dampfviolinen-playtime.pdf")
 
 ggplot(df.priced2, aes(x=price_category, y=average_forever)) + geom_boxplot() + scale_y_log10()
