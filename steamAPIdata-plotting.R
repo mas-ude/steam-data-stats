@@ -1,6 +1,29 @@
 library(ggplot2)
 
 # load the data file you want to plot
+
+# navigate to data folder
+setwd("data")
+df.priced <- data.frame()
+csv.list <- Sys.glob("*.csv")
+for (csv.file in csv.list) {
+  print(csv.file)
+  tmp <- read.csv(file=csv.file)
+  date <- unlist(strsplit(unlist(strsplit(csv.file, split="-"))[2], split="\\."))[1]
+  tmp$date <- date
+  df.priced <- rbind(df.priced, tmp)
+}
+
+# date as.factor color'd
+ggplot(df.priced, aes(x=owners, color=as.factor(date))) + stat_ecdf() + scale_x_log10()
+
+# prices
+ggplot(df.priced, aes(x=price, color=as.factor(date))) + stat_ecdf() + scale_x_log10()
+
+
+
+##############
+
 df.priced <- read.csv(file="steamdata.csv")
 
 
