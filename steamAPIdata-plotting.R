@@ -1,14 +1,17 @@
+library(ggplot2)
+
+# load the data file you want to plot
 df.priced <- read.csv(file="steamdata.csv")
 
 
-ggplot(d, aes(x=owners)) + stat_ecdf() + scale_x_log10()
-ggplot(d, aes(x=average_forever)) + stat_ecdf() + scale_x_log10()
-ggplot(d, aes(x=appid, y=owners)) + geom_point() + scale_y_log10() + xlim(0,400000)
-ggplot(d, aes(x=appid, y=average_forever)) + geom_point() + scale_y_log10() + xlim(0,400000)
-ggplot(d, aes(x=appid, y=average_2weeks)) + geom_point() + scale_y_log10() + xlim(0,400000)
+ggplot(df.priced, aes(x=owners)) + stat_ecdf() + scale_x_log10()
+ggplot(df.priced, aes(x=average_forever)) + stat_ecdf() + scale_x_log10()
+ggplot(df.priced, aes(x=appid, y=owners)) + geom_point() + scale_y_log10() + xlim(0,400000)
+ggplot(df.priced, aes(x=appid, y=average_forever)) + geom_point() + scale_y_log10() + xlim(0,400000)
+ggplot(df.priced, aes(x=appid, y=average_2weeks)) + geom_point() + scale_y_log10() + xlim(0,400000)
 
-ggplot(d, aes(x=players_forever, y=average_forever)) + geom_point() + scale_x_log10() + scale_y_log10()
-ggplot(d, aes(x=players_2weeks, y=average_2weeks)) + geom_point() + scale_x_log10() + scale_y_log10()
+ggplot(df.priced, aes(x=players_forever, y=average_forever)) + geom_point() + scale_x_log10() + scale_y_log10()
+ggplot(df.priced, aes(x=players_2weeks, y=average_2weeks)) + geom_point() + scale_x_log10() + scale_y_log10()
 
 
 ### price data
