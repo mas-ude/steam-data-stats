@@ -1,5 +1,4 @@
 library(jsonlite)
-library(ggplot2)
 
 ## get and package steamspy data
 steamspy.data <- fromJSON("http://steamspy.com/api.php?request=all")
