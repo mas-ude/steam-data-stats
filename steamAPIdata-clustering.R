@@ -1,3 +1,5 @@
+library(ggplot2)
+
 df.priced <- read.csv(file="steamdata.csv")
 
 ### clustering

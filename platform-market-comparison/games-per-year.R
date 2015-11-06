@@ -1,8 +1,48 @@
 library(ggplot2)
 
+
+
+
+# all cost calculated for region 1 EU in Euros; cost converted from other regions (UK/US) with current exchange rates plus taxes
+
+# basis a yearly budget 
 budget <- seq(0, 1000, 50)
 
-## ps now streaming
+## update to current exchange rates here
+exchangerate.GBPtoEUR <- 1.41160
+exchangerate.USDtoEUR <- 1.09205
+
+## factor in additional cost factors
+# consider broadband Internet access costs (might not be available in rural areas)
+broadband.enabled <- FALSE
+
+#### ps now streaming
+# US, CA, UK only; using US as data source, as info on UK is insufficient:
+# https://en.wikipedia.org/wiki/List_of_PlayStation_Now_games
+# http://www.ign.com/wikis/playstation-4/List_of_PlayStation_Now_Games
+
+## monthly cost 12.99 pounds
+psnow.monthly <- 12.99 * exchangerate.GBPtoEUR
+
+## specific hardware requirements
+# either a ps4, ps3, or specific Sony TV models (plus controller)
+# going with the ps4 option, as its the most common and includes a controller
+psnow.hw <- 329 # as of 2015/11/04
+
+## size of included catalog
+psnow.games <- read.csv("data/psnow-games.csv", header = TRUE, sep = ";", colClasses = c("character", "numeric", "numeric", "numeric", "numeric", "logical"))
+
+psnow.subscription.numgames <- length(psnow.games$Included.In.Subscription[psnow.games$Included.In.Subscription == TRUE])
+  
+  
+## cost of renting additional games
+psnow.rental.price.48h <- 2.99 * exchangerate.GBPtoEUR
+psnow.rental.price.30d <- 7.99 * exchangerate.GBPtoEUR
+psnow.rental.numgames <- nrow(psnow.games) - psnow.subscription.numgames
+  
+
+
+
 # CAPEX: 150 (device+controler over 10 years) 150/10
 # OPEX: subscription + rental cost (assumed 7 days rental for 1/day) + 20*12; 7 per title
 # plus assumed 100 titles in subscription service included
