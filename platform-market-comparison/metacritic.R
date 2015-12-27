@@ -8,7 +8,7 @@ library(plyr)
 
 # setwd("git/steam-data-stats/platform-market-comparison/")
 
-df.metacritic <- read.csv("data/metacritic.csv", header=TRUE, sep=";", colClasses=c("numeric", "character", "character", "character", "numeric", "character", "character"))
+df.metacritic <- read.csv("data/metacritic-20151227.csv", header=TRUE, sep=";", colClasses=c("numeric", "character", "character", "character", "numeric", "character", "character"))
 df.metacritic$platform <- as.factor(df.metacritic$platform)
 df.metacritic$release <- as.Date(df.metacritic$release, format = "%B %d, %Y")
 ggplot(df.metacritic, aes(x=score, color=platform)) + stat_ecdf()
