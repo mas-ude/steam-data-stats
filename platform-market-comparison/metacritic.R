@@ -38,3 +38,15 @@ df.merged$age <- 2015 - df.merged$year
 hist(df.merged$age)
 mean(df.merged$age, na.rm = TRUE)
 median(df.merged$age, na.rm = TRUE)
+
+
+df.lengths <- read.csv("data/gamelengths.csv", sep = ";", colClasses = c("character", "numeric", "numeric", "character"))
+
+## average the lengths over each occurence on the individual platforms and count the reports
+tmp1 <- aggregate(average_length ~ title, data = df.lengths,FUN="mean")
+tmp2 <- aggregate(times_reported ~ title, data = df.lengths,FUN="sum")
+df.lengths.cross <- merge(tmp1, tmp2, by = "title")
+
+
+df.merged2 <- merge(df.merged, df.lengths.cross, by.x = "Title", by.y = "title", all.x = TRUE)
+
