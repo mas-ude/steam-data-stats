@@ -39,7 +39,8 @@ hist(df.merged$age)
 mean(df.merged$age, na.rm = TRUE)
 median(df.merged$age, na.rm = TRUE)
 
-
+## merge with gamelengths.com dataset
+# optional, as it contains only very entries 
 df.lengths <- read.csv("data/gamelengths.csv", sep = ";", colClasses = c("character", "numeric", "numeric", "character"))
 
 ## average the lengths over each occurence on the individual platforms and count the reports
@@ -50,3 +51,19 @@ df.lengths.cross <- merge(tmp1, tmp2, by = "title")
 
 df.merged2 <- merge(df.merged, df.lengths.cross, by.x = "Title", by.y = "title", all.x = TRUE)
 
+
+## merge with howlongtobeat.com dataset
+
+## PRE-MERGE-TODO: unify category names across datasets and merge by title AND category
+## PRE-MERGE-TODO: remove outliers, e.g. runescape @ 100000h
+
+df.hltb <- read.csv("data/howlongtobeat.csv", sep = ";", colClasses = c("character", "numeric", "numeric", "numeric", "numeric", "character"))
+
+df.merged2 <- merge(df.metacritic, df.hltb, by ="title", all.x = TRUE, all.y = TRUE)
+
+summary(df.hltb)
+
+tmp <- df.hltb[order(-df.hltb$combined_length),]
+
+ggplot(df.hltb, aes(x = combined_length)) + stat_ecdf() + scale_x_log10()
+ggplot(df.hltb, aes(x = combined_length)) + stat_density() + scale_x_log10() # + xlim(0, 100)
