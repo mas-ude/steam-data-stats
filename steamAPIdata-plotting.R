@@ -19,6 +19,7 @@ ggplot(df.priced, aes(x=owners, color=as.factor(date))) + stat_ecdf() + scale_x_
 
 # prices
 ggplot(df.priced, aes(x=price, color=as.factor(date))) + stat_ecdf() + scale_x_log10()
+ggsave("steam-prices.pdf", width=12, height=8)
 
 
 

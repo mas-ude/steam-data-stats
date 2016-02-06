@@ -67,3 +67,18 @@ tmp <- df.hltb[order(-df.hltb$combined_length),]
 
 ggplot(df.hltb, aes(x = combined_length)) + stat_ecdf() + scale_x_log10()
 ggplot(df.hltb, aes(x = combined_length)) + stat_density() + scale_x_log10() # + xlim(0, 100)
+
+
+####  combine some stuff with steam datasets
+## TODO: consider using adist() for fuzzy string matching the titles
+## http://www.r-bloggers.com/fuzzy-string-matching-a-survival-skill-to-tackle-unstructured-information/
+string.matches <- adist(subset(df.priced, date = "20151015")$name, subset(df.metacritic, platform == "pc")$title, ignore.case = TRUE)
+
+  
+df.steammetascore <- merge(df.priced, subset(df.metacritic, platform == "pc"), by.x = "name", by.y = "title", all.x = TRUE)
+df.steammetascorehltb <- merge(df.steammetascore, subset(df.hltb, platform == "PC"), by.x = "name", by.y = "title", all.x = TRUE)
+
+# hist of steam games metacritic score
+ggplot(df.steammetascorehltb, aes(x = score)) + geom_histogram(binwidth = 1)
+ggplot(df.steammetascorehltb, aes(x = score)) + stat_ecdf()
+
