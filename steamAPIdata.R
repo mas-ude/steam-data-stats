@@ -3,7 +3,6 @@ library(jsonlite)
 ## get and package steamspy data
 steamspy.data <- fromJSON("http://steamspy.com/api.php?request=all")
 d <- data.frame()
-
 for (i in steamspy.data) {
   tmp <- data.frame(appid=i$appid, name=i$name, owners=i$owners, owners_variance=i$owners_variance, players_forever=i$players_forever, players_forever_variance=i$players_forever_variance, players_2weeks=i$players_2weeks, players_2weeks_variance=i$players_2weeks_variance, average_forever=i$average_forever, average_2weeks=i$average_2weeks, median_forever=i$median_forever, median_2weeks=i$median_2weeks)
   d <- rbind(d, tmp)  
@@ -18,6 +17,11 @@ df.priced <- data.frame()
 for (i in 1:nrow(d)) {
   Sys.sleep(2) # steam storefront API is throttled to ~200requests/5mins
   row <- d[i,]
+  # Skip "empty" app IDs
+  if (is.na(row["appid",1])) {
+    cat(i, "was NA")
+    next
+  }
   print(paste("http://store.steampowered.com/api/appdetails/?appids=",row["appid"], sep=""))
   tmp <- fromJSON(paste("http://store.steampowered.com/api/appdetails/?appids=",row["appid"], sep=""))
   
